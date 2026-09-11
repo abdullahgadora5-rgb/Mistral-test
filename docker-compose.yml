@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  obscura:
+    image: ghcr.io/h4ckf0r0day/obscura:latest
+    container_name: obscura-browser
+    ports:
+      - "9222:9222"
+    command: ["serve", "--mcp", "--port", "9222", "--host", "0.0.0.0"]
+    environment:
+      - OBSCURA_MCP_ALLOWED_ORIGINS=*
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+
+  obscura-stealth:
+    image: ghcr.io/h4ckf0r0day/obscura:latest
+    container_name: obscura-browser-stealth
+    ports:
+      - "9223:9223"
+    command: ["serve", "--mcp", "--port", "9223", "--host", "0.0.0.0", "--stealth"]
+    environment:
+      - OBSCURA_MCP_ALLOWED_ORIGINS=*
+    restart: unless-stopped

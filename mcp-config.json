@@ -1,0 +1,247 @@
+{
+  "name": "Obscura Browser",
+  "description": "Headless browser for web scraping and AI agent automation via MCP",
+  "version": "1.0.0",
+  "type": "server",
+  "command": "obscura",
+  "args": ["mcp"],
+  "env": {},
+  "timeout": 60,
+  "tools": [
+    {
+      "name": "browser_navigate",
+      "description": "Navigate to a URL",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The URL to navigate to"
+          },
+          "waitUntil": {
+            "type": "string",
+            "enum": ["load", "domcontentloaded", "networkidle", "networkidle2"],
+            "description": "Wait until condition",
+            "default": "load"
+          }
+        },
+        "required": ["url"]
+      }
+    },
+    {
+      "name": "browser_snapshot",
+      "description": "Get current page snapshot",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "fullPage": {
+            "type": "boolean",
+            "description": "Capture full page",
+            "default": false
+          }
+        }
+      }
+    },
+    {
+      "name": "browser_click",
+      "description": "Click an element",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "selector": {
+            "type": "string",
+            "description": "CSS selector or XPath"
+          },
+          "button": {
+            "type": "string",
+            "enum": ["left", "right", "middle"],
+            "default": "left"
+          },
+          "clickCount": {
+            "type": "integer",
+            "default": 1
+          }
+        },
+        "required": ["selector"]
+      }
+    },
+    {
+      "name": "browser_fill",
+      "description": "Fill a form input",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "selector": {
+            "type": "string",
+            "description": "CSS selector or XPath"
+          },
+          "value": {
+            "type": "string",
+            "description": "Value to fill"
+          },
+          "clearFirst": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": ["selector", "value"]
+      }
+    },
+    {
+      "name": "browser_extract",
+      "description": "Extract data from the page",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "selector": {
+            "type": "string",
+            "description": "CSS selector"
+          },
+          "attribute": {
+            "type": "string",
+            "description": "Attribute to extract"
+          },
+          "all": {
+            "type": "boolean",
+            "description": "Extract all matching elements",
+            "default": false
+          }
+        }
+      }
+    },
+    {
+      "name": "browser_screenshot",
+      "description": "Take a screenshot",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "File path to save screenshot"
+          },
+          "fullPage": {
+            "type": "boolean",
+            "default": false
+          },
+          "clip": {
+            "type": "object",
+            "properties": {
+              "x": { "type": "integer" },
+              "y": { "type": "integer" },
+              "width": { "type": "integer" },
+              "height": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "browser_pdf",
+      "description": "Generate a PDF of the page",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "File path to save PDF"
+          },
+          "format": {
+            "type": "string",
+            "enum": ["A0", "A1", "A2", "A3", "A4", "A5", "A6", "Legal", "Letter", "Tabloid"],
+            "default": "A4"
+          },
+          "landscape": {
+            "type": "boolean",
+            "default": false
+          },
+          "printBackground": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      }
+    },
+    {
+      "name": "browser_get_cookies",
+      "description": "Get cookies for the current page",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "URL to get cookies for"
+          }
+        }
+      }
+    },
+    {
+      "name": "browser_set_cookie",
+      "description": "Set a cookie",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Cookie name"
+          },
+          "value": {
+            "type": "string",
+            "description": "Cookie value"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL to set cookie for"
+          },
+          "domain": {
+            "type": "string",
+            "description": "Cookie domain"
+          },
+          "path": {
+            "type": "string",
+            "default": "/"
+          },
+          "secure": {
+            "type": "boolean",
+            "default": false
+          },
+          "httpOnly": {
+            "type": "boolean",
+            "default": false
+          },
+          "sameSite": {
+            "type": "string",
+            "enum": ["Strict", "Lax", "None"],
+            "default": "Lax"
+          },
+          "expires": {
+            "type": "integer",
+            "description": "Expiration timestamp in seconds"
+          }
+        },
+        "required": ["name", "value"]
+      }
+    },
+    {
+      "name": "browser_clear_cookies",
+      "description": "Clear cookies",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "URL to clear cookies for"
+          }
+        }
+      }
+    }
+  ],
+  "resources": [
+    {
+      "name": "browser_session",
+      "description": "Live browser session",
+      "uri": "obscura://session",
+      "mimeType": "application/json",
+      "readOnly": false
+    }
+  ]
+}

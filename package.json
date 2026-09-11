@@ -1,0 +1,30 @@
+{
+  "name": "obscura-browser-mcp",
+  "version": "1.0.0",
+  "description": "Obscura Browser MCP - Web browsing capability for AI agents",
+  "main": "index.js",
+  "scripts": {
+    "mcp": "obscura mcp",
+    "mcp:stealth": "obscura mcp --stealth",
+    "serve": "obscura serve --mcp --port 9222",
+    "serve:stealth": "obscura serve --mcp --port 9222 --stealth"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "browser",
+    "headless",
+    "scraping",
+    "obscura"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abdullahgadora5-rgb/Mistral-test.git"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
